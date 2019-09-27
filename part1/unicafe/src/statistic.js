@@ -2,9 +2,10 @@ import React from 'react'
 
 const Statistic = ({name, value}) => {
     return(
-        <p>
-            {name} {value}
-        </p>
+        <tr>
+            <td>{name}</td>
+            <td>{value}</td>
+        </tr>
     )
 }
 
