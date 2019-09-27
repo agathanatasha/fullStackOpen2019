@@ -1,4 +1,5 @@
 import React from 'react'
+import { Statistic } from './statistic';
 
 const Statistics = ({ good, neutral, bad, average, positivePercentage }) => {
     const isNoFeedback = 
@@ -12,11 +13,11 @@ const Statistics = ({ good, neutral, bad, average, positivePercentage }) => {
         } else {
             return (
                 <div>
-                    <p>good {good}</p>
-                    <p>neutral {neutral}</p>
-                    <p>bad {bad}</p>
-                    <p>average {average}</p>
-                    <p>positive {positivePercentage}%</p>
+                    <Statistic name="good" value={good} />
+                    <Statistic name="neutral" value={neutral} />
+                    <Statistic name="bad" value={bad} />
+                    <Statistic name="average" value={average} />
+                    <Statistic name="positive" value={`${positivePercentage}%`} />
                 </div>
             )
         }
