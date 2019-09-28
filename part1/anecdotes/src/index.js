@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
+import { MostVotes } from './mostVotes';
 
 const App = (props) => {
     const [selected, setSelected] = useState(0)
@@ -25,6 +26,8 @@ const App = (props) => {
             <br />
             <button onClick={updateVotes}>Vote</button>
             <button onClick={() => setSelected(randomInt)}>Next anecdote</button>
+            <br />
+            <MostVotes anecdotes={props.anecdotes} votes={votes} />
         </div>
     )
 }
