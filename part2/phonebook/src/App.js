@@ -3,10 +3,14 @@ import { Contacts } from './contact';
 
 const App = () => {
   const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas', phone: '040-1234567' }
-  ]) 
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
+  ])
   const [ newName, setNewName ] = useState('')
   const [ newPhoneNumber, setNewPhoneNumber ] = useState('')
+  const [ filter, setFilter ] = useState('')
 
   const addName = (event) => {
     event.preventDefault()
@@ -26,9 +30,17 @@ const App = () => {
     setNewPhoneNumber(event.target.value)
   }
 
+  const onFilterChange = (event) => {
+    setFilter(event.target.value)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+      filter shown with <input name="filter"
+                               value={filter}
+                               onChange={onFilterChange} ></input>
+      <h2>Add a new</h2>
       <form onSubmit={addName} >
         <div>
           name: <input name="name" 
@@ -44,8 +56,11 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Contacts persons={persons} />
-      <div>debug: {newName} {newPhoneNumber}</div>
+      <Contacts persons={persons} filter={filter} />
+      <div>
+        debug: {newName} {newPhoneNumber} <br></br>
+        filter: {filter}
+      </div>
     </div>
   )
 }
