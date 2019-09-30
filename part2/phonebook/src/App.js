@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Contacts } from './contact';
+import { PersonForm } from './personForm';
+import { Filter } from './filter';
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -18,7 +20,7 @@ const App = () => {
     if ( names.includes(newName) ){
       alert( `${newName} is already added to phonebook` )
     } else {
-      setPersons(persons.concat({ name: newName, phone: newPhoneNumber }))
+      setPersons(persons.concat({ name: newName, number: newPhoneNumber }))
     }
   }
 
@@ -37,30 +39,16 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with <input name="filter"
-                               value={filter}
-                               onChange={onFilterChange} ></input>
+      <Filter filter={filter}
+              onFilterChange={onFilterChange} />
       <h2>Add a new</h2>
-      <form onSubmit={addName} >
-        <div>
-          name: <input name="name" 
-                       value={newName} 
-                       onChange={onNameFieldChange} />
-          <br></br>
-          phone number: <input name="phone-number" 
-                               value={newPhoneNumber}
-                               onChange={onPhoneFieldChange} ></input>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm addName={addName}
+                  newName={newName}
+                  onNameFieldChange={onNameFieldChange}
+                  newPhoneNumber={newPhoneNumber}
+                  onPhoneFieldChange={onPhoneFieldChange} />
       <h2>Numbers</h2>
       <Contacts persons={persons} filter={filter} />
-      <div>
-        debug: {newName} {newPhoneNumber} <br></br>
-        filter: {filter}
-      </div>
     </div>
   )
 }
