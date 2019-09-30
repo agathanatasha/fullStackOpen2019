@@ -14,6 +14,10 @@ function App() {
     setFilter(event.target.value)
   }
 
+  const onCountryButtonClick = (event) => {
+    setFilter(event.target.value)
+  }
+
   useEffect(() => {
     console.log(`effect ${api_name}${filter}`)
     axios.get(`${api_name}${filter}`)
@@ -32,10 +36,7 @@ function App() {
   return (
     <div>
       <Filter filter={filter} onFilterChange={onFilterChange} />
-      <Result countries={countries} />
-      <div>
-        filter debug: {filter} <br></br>
-      </div>
+      <Result countries={countries} onCountryButtonClick={onCountryButtonClick} />
     </div>
   );
 }
