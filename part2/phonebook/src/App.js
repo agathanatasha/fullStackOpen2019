@@ -19,7 +19,16 @@ const App = () => {
     event.preventDefault()
     const names = persons.map(person => person.name)
     if (names.includes(newName)) {
-      alert(`${newName} is already added to phonebook`)
+      const confirmMsg = `${newName} is already added to phonebook. Do you want to replace the old number with the new one?`
+      if (window.confirm(confirmMsg)) {
+        const personObject = persons.find(person => person.name === newName)
+        const updatedPersonObject = { ...personObject, number: newPhoneNumber }
+
+        personsService.update(updatedPersonObject)
+          .then(returnedPerson => {
+            setPersons(persons.map(person => person.name === newName ? returnedPerson : person))
+          })
+      }
     } else {
       const personObject = {
         name: newName,
@@ -29,15 +38,15 @@ const App = () => {
       personsService.create(personObject)
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
-          setNewName('')
-          setNewPhoneNumber('')
         })
     }
+    setNewName('')
+    setNewPhoneNumber('')
   }
 
   const onRemoveName = (event) => {
-    const removeNameId = event.target.value
-    const removeName = persons[removeNameId-1].name
+    const removeNameId = parseInt(event.target.value)
+    const removeName = persons.find(person => person.id === removeNameId).name
     if (window.confirm(`Do you want to delete ${removeName}?`)) {
       personsService.remove(removeNameId)
         .then(returnedPersons => {
