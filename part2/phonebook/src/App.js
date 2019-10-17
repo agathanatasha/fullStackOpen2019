@@ -11,6 +11,7 @@ const App = () => {
   const [newPhoneNumber, setNewPhoneNumber] = useState('')
   const [filter, setFilter] = useState('')
   const [successMsg, setSuccessMsg] = useState('')
+  const [errorMsg, setErrorMsg] = useState('')
 
   useEffect(() => {
     personsService.getAll()
@@ -29,8 +30,9 @@ const App = () => {
         personsService.update(updatedPersonObject)
           .then(returnedPerson => {
             setPersons(persons.map(person => person.name === newName ? returnedPerson : person))
+            setSuccessMsg(`${newName}'s number is updated`)
           })
-        setSuccessMsg(`${newName}'s number is updated`)
+          .catch(error => setErrorMsg(`${newName} is already deleted and cannot be updated`))
       }
     } else {
       const personObject = {
@@ -55,8 +57,9 @@ const App = () => {
       personsService.remove(removeNameId)
         .then(returnedPersons => {
           setPersons(returnedPersons)
-        }
-        )
+        })
+        .catch(error => setErrorMsg(`${removeName}'s number has already been deleted`))
+        
     }
   }
 
@@ -75,7 +78,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification msg={successMsg} />
+      <Notification state="success" msg={successMsg} />
+      <Notification state="error" msg={errorMsg} />
       <Filter filter={filter}
         onFilterChange={onFilterChange} />
       <h2>Add a new</h2>

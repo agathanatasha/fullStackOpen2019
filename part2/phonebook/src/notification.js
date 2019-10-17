@@ -1,12 +1,12 @@
 import React from 'react'
 import './notification.css'
 
-export const Notification = ({msg}) => {
+export const Notification = ({state, msg}) => {
     if (msg === ''){
         return null
     }
     return(
-        <div className="success">
+        <div className={state}>
             {msg}
         </div>
     )
