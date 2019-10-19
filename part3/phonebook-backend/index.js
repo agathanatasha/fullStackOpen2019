@@ -54,11 +54,17 @@ const generateId = (max) => {
 app.post('/api/persons', (req,res) => {
   const body = req.body
 
-  if(!body.number || !body.name){
-    return res.status(400).json({
-      error: 'missing name or number'
-    })
+  if(!body.number){
+    return res.status(400).json({ error: 'missing number' })
   } 
+
+  if(!body.name){
+    return res.status(400).json({ error: 'missing name' })
+  }
+
+  if(persons.find(person => person.name == body.name)){
+    return res.status(400).json({ error: 'name already exists' })
+  }
 
   const newPerson = {
     name: body.name,
